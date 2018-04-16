@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>Earthquake Visualization</title>
+
+  <link rel='stylesheet' type='text/css' href='{{url_for('static',filename='css/style.css')}}'>
+
+</head>
+
+<body>
+  <h1>Heatmap</h1>
+
+  <div id='map'></div>
+
+  <!-- Scripts -->
+  <script
+  src="https://code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous"></script>
+
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLdB_6IXHqcbrztRm6Ek7fE4XE4l1DpqE&libraries=visualization&callback=initMap">
+  </script>
+  <script type="text/javascript" src='{{url_for('static', filename='js/heatmap.js')}}'></script>
+ </body>
+
+</html>

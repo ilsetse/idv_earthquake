@@ -1,0 +1,11 @@
+/* GOOGLE HEATMAP */
+html, body {
+  width: 100%;
+}
+
+#map {
+  width: 600px;
+  height: 600px;
+  margin: 0 auto;
+}
+
