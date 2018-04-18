@@ -1,18 +1,17 @@
 var map, heatmap, allowedBounds;
-var csv = [];
 
 function initMap(){
-
   map = new google.maps.Map($('#map')[0],{
     zoom: 20,
     center: new google.maps.LatLng(0,0),
     //center: {lat: 60.204598, lng: 24.961859}, // Exactum
     mapTypeId: 'roadmap'
   });
-
- 
- /*
+  
+  getData();
+  /*
   var coordinates = getCoordinates();
+
   heatmap = new google.maps.visualization.HeatmapLayer({
     data: getPoints(coordinates),
     map: map
@@ -38,30 +37,29 @@ function initMap(){
   boundsNew = new google.maps.LatLngBounds(swNew, neNew);
   map.fitBounds(boundsNew);
   
+  //console.log("FINAL ", _coordinates)
+
 }
 
 
-
-function getData(evt){
-  var file = evt.target.files[0];
-  //file = 'static/data/processed_data.csv'
+function getData(){
+  file = 'static/data/processed_data.csv';
   Papa.parse(file, {
-    delimiter: ',',
-    header: true,
+    header = true,
     complete: function(results) {
-      //console.log(results);
+      csv = [];
       for (idx in results['data']){
-        var row = results['data'][idx];
-        csv.push(new google.maps.LatLng(row['latitude'], row['longitude']));
+        var row = results['data'][idx]'
+        csv.push(new google.maps.LatLng(row['lat'], row['lng']))
       }
       loadHeatmap(csv);
-    } 
+    }
   });
 }
 
 function loadHeatmap(csv){
   var pointArray = new google.maps.MVCArray(csv);
-  console.log(pointArray);
+
   if(heatmap) heatmap.setMap(null);
 
   heatmap = new google.maps.visualization.HeatmapLayer({
@@ -69,18 +67,6 @@ function loadHeatmap(csv){
   });
   heatmap.setMap(map);
 }
-
-
-$(document).ready(function(){
-  $("#csv-file").change(getData);
-  google.maps.event.addDomListener(window, 'load', initMap);
-
-});
-
-
-
-
-
 
 /*
 var nData;
@@ -99,9 +85,11 @@ function getCoordinates(){
 
   //console.log(lng);
   return [lat, lng];
+*/  
   
   
-  // use uncompressed JQuery, not slim minified!
+  /* use uncompressed JQuery, not slim minified! */
+  /*
   $.ajax({
     url: 'static/data/apr_15_earthquake_data.json',
     success: function(data) {
@@ -109,6 +97,9 @@ function getCoordinates(){
       d = data['features'];
       idx = 0;
       for (idx=0; idx<n; idx++){
+        //lng = d[idx]['geometry']['coordinates'][0];
+        //lat = d[idx]['geometry']['coordinates'][1];
+
         lng.push(d[idx]['geometry']['coordinates'][0]);
         lat.push(d[idx]['geometry']['coordinates'][1]);
       }
@@ -118,13 +109,14 @@ function getCoordinates(){
       console.log('ERROR getData()');
     }
   });
+  */
 } // endof getCoordinates();
 
 // Heatmap data
+/*
 function getPoints(coordinates) {
   return [
     new google.maps.LatLng(-5.4954, 151.5068)
   ];
 }
-
 */
