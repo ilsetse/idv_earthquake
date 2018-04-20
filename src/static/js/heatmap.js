@@ -36,10 +36,10 @@ function initMap(){
 function getCoordinates(){
   // use uncompressed JQuery, not slim minified!
   $.ajax({
-    url: 'static/data/apr_15_earthquake_data.json',
+    url: 'static/data/aug_01_earthquake_data.json',
     success: function(data) {
-      n = data['features'].length;
       d = data['features'];
+      n = d.length;
       idx = 0;
       for (idx=0; idx<n; idx++){
         lng = d[idx]['geometry']['coordinates'][0];
