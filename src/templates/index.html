@@ -1,33 +1,38 @@
 <!DOCTYPE html>
 
 <html>
-<head>
-  <title>Earthquake Visualization</title>
+  <head>
+    <title>Earthquake Visualization</title>
 
-  <link rel='stylesheet' type='text/css' href='{{url_for('static',filename='css/style.css')}}'>
+    <link rel='stylesheet' type='text/css' href='{{url_for('static',filename='css/normalize.css')}}'>
+    <link rel='stylesheet' type='text/css' href='{{url_for('static',filename='css/skeleton.css')}}'>
+    <link rel='stylesheet' type='text/css' href='{{url_for('static',filename='css/style.css')}}'>
 
-</head>
+  </head>
 
-<body>
-  <h1>Heatmap</h1>
-  
-  <input type='file' id='csv-file' name='files'/>
+  <body>
+    <div class='container' style='margin-top:5%;'>
+      <h1 style='text-align:center;'>Heatmap</h1>
+      <div id='map'></div>
+    </div> <!-- endof container -->
 
+    <!-- Scripts -->
+    <script
+    src="http://code.jquery.com/jquery-3.3.1.js"
+    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    crossorigin="anonymous">
+    </script>
 
-  <div id='map'></div>
+    <!-- use later for buttons
+    <script src="https://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+    --> 
 
-  <!-- Scripts -->
-  <script
-  src="https://code.jquery.com/jquery-3.3.1.js"
-  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-  crossorigin="anonymous"></script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKGtYtK-TqXmLFYJzj-rJoNOGWcmx39JE&libraries=visualization&callback=initMap">
+    </script>
 
-  <script src='{{url_for('static', filename='js/PapaParse-4.3.2/papaparse.min.js')}}'></script>
-
-  <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLdB_6IXHqcbrztRm6Ek7fE4XE4l1DpqE&libraries=visualization">
-  </script>
-  <script type="text/javascript" src='{{url_for('static', filename='js/heatmap.js')}}'></script>
- </body>
+    <script type="text/javascript" src='{{url_for('static', filename='js/heatmap.js')}}'></script>
+  </body>
 
 </html>

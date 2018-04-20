@@ -11,13 +11,7 @@ function initMap(){
   });
 
  
- /*
-  var coordinates = getCoordinates();
-  heatmap = new google.maps.visualization.HeatmapLayer({
-    data: getPoints(coordinates),
-    map: map
-  });
-  */
+  getCoordinates(); // and load heatmap
 
   allowedBounds = new google.maps.LatLngBounds(
     new google.maps.LatLng(85, -180), // top left corner
@@ -37,31 +31,36 @@ function initMap(){
   
   boundsNew = new google.maps.LatLngBounds(swNew, neNew);
   map.fitBounds(boundsNew);
-  
 }
-
-
-
-function getData(evt){
-  var file = evt.target.files[0];
-  //file = 'static/data/processed_data.csv'
-  Papa.parse(file, {
-    delimiter: ',',
-    header: true,
-    complete: function(results) {
-      //console.log(results);
-      for (idx in results['data']){
-        var row = results['data'][idx];
-        csv.push(new google.maps.LatLng(row['latitude'], row['longitude']));
+ 
+function getCoordinates(){
+  // use uncompressed JQuery, not slim minified!
+  $.ajax({
+    url: 'static/data/apr_15_earthquake_data.json',
+    success: function(data) {
+      n = data['features'].length;
+      d = data['features'];
+      idx = 0;
+      for (idx=0; idx<n; idx++){
+        lng = d[idx]['geometry']['coordinates'][0];
+        lat = d[idx]['geometry']['coordinates'][1];
+        csv.push(new google.maps.LatLng(lat, lng));
       }
+
       loadHeatmap(csv);
-    } 
+
+    },
+    error: function() {
+      console.log('ERROR getData()');
+    }
   });
-}
+} // endof getCoordinates();
+
 
 function loadHeatmap(csv){
   var pointArray = new google.maps.MVCArray(csv);
-  console.log(pointArray);
+  //console.log(pointArray);
+
   if(heatmap) heatmap.setMap(null);
 
   heatmap = new google.maps.visualization.HeatmapLayer({
@@ -71,60 +70,3 @@ function loadHeatmap(csv){
 }
 
 
-$(document).ready(function(){
-  $("#csv-file").change(getData);
-  google.maps.event.addDomListener(window, 'load', initMap);
-
-});
-
-
-
-
-
-
-/*
-var nData;
-var lat = [];
-var lng = [];
-function getCoordinates(){
-  $.getJSON('static/data/apr_15_earthquake_data.json', function (data) {
-    nData = data['features'].length;
-    d = data['features'];
-    for (idx=0; idx<nData; idx++){
-      lng[idx] = d[idx]['geometry']['coordinates'][0];
-      lat[idx] = d[idx]['geometry']['coordinates'][1];
-    }
-
-  });
-
-  //console.log(lng);
-  return [lat, lng];
-  
-  
-  // use uncompressed JQuery, not slim minified!
-  $.ajax({
-    url: 'static/data/apr_15_earthquake_data.json',
-    success: function(data) {
-      n = data['features'].length;
-      d = data['features'];
-      idx = 0;
-      for (idx=0; idx<n; idx++){
-        lng.push(d[idx]['geometry']['coordinates'][0]);
-        lat.push(d[idx]['geometry']['coordinates'][1]);
-      }
-
-    },
-    error: function() {
-      console.log('ERROR getData()');
-    }
-  });
-} // endof getCoordinates();
-
-// Heatmap data
-function getPoints(coordinates) {
-  return [
-    new google.maps.LatLng(-5.4954, 151.5068)
-  ];
-}
-
-*/
