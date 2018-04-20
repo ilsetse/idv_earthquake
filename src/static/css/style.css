@@ -6,6 +6,15 @@ html, body {
 #map {
   width: 1024px;
   height: 1024px;
-  margin: 0 auto;
 }
 
+#options_panel {
+	position: fixed;
+	top: 10%;
+	left: 5px;
+	z-index: 5;
+	background-color: #fff;
+	padding: 5px;
+	text-align: center;
+	line-height: 30px;
+}
