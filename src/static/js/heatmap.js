@@ -4,7 +4,8 @@ var csv = [];
 function initMap(){
 
   map = new google.maps.Map($('#map')[0],{
-    zoom: 20,
+    zoom: 2,
+    minZoom: 2,
     center: new google.maps.LatLng(0,0),
     //center: {lat: 60.204598, lng: 24.961859}, // Exactum
     mapTypeId: 'roadmap'
