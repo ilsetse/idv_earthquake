@@ -18,23 +18,29 @@
   <body>
     <div class='container' style='margin:5% auto;'>
       <h1 style='text-align:center;'>Heatmap</h1>
+    </div> <!-- endof container -->
 
       <div class='row'>
         <div class='six columns'>
           <div id='map'></div>
-        </div>
-     
-      <div class='row'>
-        <div class='six columns'>
           <div id='options_panel'>
             <button onClick='resetMaps()'>RESET</button>
           </div>
         </div>
+     
+      <div class='row'>
+        <div class='six columns'>
+
+          <div id='interaction'>
+            <input type='range' min='2000' max='2018' value='2010' class='slider' id='yearRange'>
+          </div>
+
+
+        </div>
       </div>
 
 
       </div>
-    </div> <!-- endof container -->
 
     <!-- Scripts -->
     <script
@@ -43,18 +49,18 @@
     crossorigin="anonymous">
     </script>
 
-    <!-- <script src="//d3js.org/d3.v3.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.13.0/d3.min.js"></script>
 
-    <!-- use later for buttons
     <script src="https://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
-    --> 
+    
 
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKGtYtK-TqXmLFYJzj-rJoNOGWcmx39JE&libraries=visualization&callback=initMap">
     </script>
 
     <script type="text/javascript" src='{{url_for('static', filename='js/heatmap.js')}}'></script>
+
   </body>
 
 </html>

@@ -42,8 +42,12 @@ function initMap(){
     console.log(map.getBounds());
   });
 
-
  } // endof initMap
+
+
+//// interaction
+
+
 
 function setMarkerStyle(){
   return{
@@ -56,7 +60,7 @@ function setMarkerStyle(){
 }
 
 function resetMaps(){
-  // todo: close visualization window
+  // todo: close/clear visualization window
   map.fitBounds(boundsNew);
 } // endof resetMaps
 
@@ -127,4 +131,4 @@ var gradient = [
 	'rgba(127, 0, 63, 1)',
 	'rgba(191, 0, 31, 1)',
 	'rgba(255, 0, 0, 1)'
-]
+];
