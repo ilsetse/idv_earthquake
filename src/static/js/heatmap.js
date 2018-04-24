@@ -43,7 +43,16 @@ function initMap(){
   });
 
 } // endof initMap
- 
+
+
+
+function resetMaps(){
+  // todo: close visualization window
+  map.fitBounds(boundsNew);
+} // endof resetMaps
+
+
+
 function getCoordinates(){
   // use uncompressed JQuery, not slim minified!
   $.ajax({
