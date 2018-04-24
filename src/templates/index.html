@@ -2,6 +2,9 @@
 
 <html>
   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+    
     <title>Earthquake Visualization</title>
 
     <link rel='stylesheet' type='text/css' href='{{url_for('static',filename='css/normalize.css')}}'>
@@ -15,14 +18,22 @@
   <body>
     <div class='container' style='margin:5% auto;'>
       <h1 style='text-align:center;'>Heatmap</h1>
-      
-      <!--
-      <div id='options_panel'>
-        <button onclick='changeGradient()'>Change gradient</button>
-      </div>
-      -->
 
-      <div id='map'></div>
+      <div class='row'>
+        <div class='six columns'>
+          <div id='map'></div>
+        </div>
+     
+      <div class='row'>
+        <div class='six columns'>
+          <div id='options_panel'>
+            <button onClick='changeGradient()'>Change gradient</button>
+          </div>
+        </div>
+      </div>
+
+
+      </div>
     </div> <!-- endof container -->
 
     <!-- Scripts -->
@@ -31,6 +42,8 @@
     integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
     crossorigin="anonymous">
     </script>
+
+    <script src="//d3js.org/d3.v3.min.js"></script>
 
     <!-- use later for buttons
     <script src="https://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>

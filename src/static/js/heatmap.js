@@ -4,8 +4,8 @@ var csv = [];
 function initMap(){
 
   map = new google.maps.Map($('#map')[0],{
-    zoom: 2,
-    minZoom: 2,
+    zoom: 1,
+    minZoom: 1,
     center: new google.maps.LatLng(0,0),
     //center: {lat: 60.204598, lng: 24.961859}, // Exactum
     mapTypeId: 'roadmap'
@@ -14,10 +14,10 @@ function initMap(){
  
   getCoordinates(); // and load heatmap
 
+  /*
   allowedBounds = new google.maps.LatLngBounds(
     new google.maps.LatLng(85, -180), // top left corner
     new google.maps.LatLng(-85, 180), // bottom right corner
-
   );
 
   var k = 0;
@@ -32,7 +32,18 @@ function initMap(){
   
   boundsNew = new google.maps.LatLngBounds(swNew, neNew);
   map.fitBounds(boundsNew);
-}
+  */
+
+  // click to zoom
+  map.addListener('click', function(event){
+    map.setZoom(8);
+    lat = event.latLng.lat();
+    lng = event.latLng.lng();
+    newLatLng = new google.maps.LatLng(lat,lng);
+    map.setCenter(newLatLng);
+  });
+  
+} // endof initMap
  
 function getCoordinates(){
   // use uncompressed JQuery, not slim minified!
