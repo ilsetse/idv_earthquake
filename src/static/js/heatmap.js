@@ -14,7 +14,6 @@ function initMap(){
  
   getCoordinates(); // and load heatmap
 
-  /*
   allowedBounds = new google.maps.LatLngBounds(
     new google.maps.LatLng(85, -180), // top left corner
     new google.maps.LatLng(-85, 180), // bottom right corner
@@ -32,7 +31,6 @@ function initMap(){
   
   boundsNew = new google.maps.LatLngBounds(swNew, neNew);
   map.fitBounds(boundsNew);
-  */
 
   // click to zoom
   map.addListener('click', function(event){
