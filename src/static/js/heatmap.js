@@ -34,13 +34,14 @@ function initMap(){
 
   // click to zoom
   map.addListener('click', function(event){
-    map.setZoom(8);
-    lat = event.latLng.lat();
-    lng = event.latLng.lng();
+    map.setZoom(4);
+    var lat = event.latLng.lat();
+    var lng = event.latLng.lng();
     newLatLng = new google.maps.LatLng(lat,lng);
     map.setCenter(newLatLng);
+    
   });
-  
+
 } // endof initMap
  
 function getCoordinates(){
@@ -75,12 +76,11 @@ function loadHeatmap(csv){
 
   heatmap = new google.maps.visualization.HeatmapLayer({
     data: pointArray,
-		gradient: gradient
-		//opacity: 0.5
+		gradient: gradient,
+    dissipating: true 
   });
   heatmap.setMap(map);
 }
-
 
 var gradient = [
 	'rgba(0, 255, 255, 0)',
