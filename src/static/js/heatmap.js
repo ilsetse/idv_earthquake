@@ -11,7 +11,7 @@ function initMap(){
     mapTypeId: 'roadmap'
   });
 
- 
+
   getCoordinates(); // and load heatmap
 
   allowedBounds = new google.maps.LatLngBounds(
@@ -39,12 +39,21 @@ function initMap(){
     var lng = event.latLng.lng();
     newLatLng = new google.maps.LatLng(lat,lng);
     map.setCenter(newLatLng);
-    
+    console.log(map.getBounds());
   });
 
-} // endof initMap
 
+ } // endof initMap
 
+function setMarkerStyle(){
+  return{
+    path: google.maps.SymbolPath.CIRCLE,
+    fillColor: 'red',
+    fillOpacity: .2,
+    scale: 2,
+    strokeWeight: .1
+  };
+}
 
 function resetMaps(){
   // todo: close visualization window
@@ -57,6 +66,7 @@ function getCoordinates(){
   // use uncompressed JQuery, not slim minified!
   $.ajax({
     url: 'static/data/aug_01_earthquake_data.json',
+    //url: 'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&updatedafter=2018-04-01',
     success: function(data) {
       d = data['features'];
       n = d.length;
@@ -64,17 +74,27 @@ function getCoordinates(){
       for (idx=0; idx<n; idx++){
         lng = d[idx]['geometry']['coordinates'][0];
         lat = d[idx]['geometry']['coordinates'][1];
-        csv.push(new google.maps.LatLng(lat, lng));
+        coordinate = new google.maps.LatLng(lat, lng);
+        csv.push(coordinate);
+
+        // js bool option for marker?
+        /*
+        var marker = new google.maps.Marker({
+          position: coordinate,
+          map: map,
+          icon: setMarkerStyle()
+        });
+        */
       }
 
       loadHeatmap(csv);
-
     },
     error: function() {
       console.log('ERROR getData()');
     }
   });
 } // endof getCoordinates();
+
 
 
 function loadHeatmap(csv){
@@ -90,6 +110,7 @@ function loadHeatmap(csv){
   });
   heatmap.setMap(map);
 }
+
 
 var gradient = [
 	'rgba(0, 255, 255, 0)',
