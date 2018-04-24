@@ -70,7 +70,7 @@ function getCoordinates(){
   // use uncompressed JQuery, not slim minified!
   $.ajax({
     url: 'static/data/aug_01_earthquake_data.json',
-    //url: 'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&updatedafter=2018-04-01',
+    //url: 'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&updatedafter=2018-04-01&minmagnitude=2',
     success: function(data) {
       d = data['features'];
       n = d.length;
