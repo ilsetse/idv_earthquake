@@ -1,4 +1,4 @@
-var map, heatmap, allowedBounds;
+var map, heatmap, allowedBounds, globalData;
 var csv = [];
 
 function initMap(){
@@ -72,26 +72,8 @@ function getCoordinates(){
     url: 'static/data/aug_01_earthquake_data.json',
     //url: 'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&updatedafter=2018-04-01',
     success: function(data) {
-      d = data['features'];
-      n = d.length;
-      idx = 0;
-      for (idx=0; idx<n; idx++){
-        lng = d[idx]['geometry']['coordinates'][0];
-        lat = d[idx]['geometry']['coordinates'][1];
-        coordinate = new google.maps.LatLng(lat, lng);
-        csv.push(coordinate);
-
-        // js bool option for marker?
-        /*
-        var marker = new google.maps.Marker({
-          position: coordinate,
-          map: map,
-          icon: setMarkerStyle()
-        });
-        */
-      }
-
-      loadHeatmap(csv);
+      globalData = data;
+      loadData(globalData, csv);
     },
     error: function() {
       console.log('ERROR getData()');
@@ -132,3 +114,26 @@ var gradient = [
 	'rgba(191, 0, 31, 1)',
 	'rgba(255, 0, 0, 1)'
 ];
+
+function loadData(data, csv) {
+  d = data['features'];
+  n = d.length;
+  idx = 0;
+  for (idx=0; idx<n; idx++){
+    lng = d[idx]['geometry']['coordinates'][0];
+    lat = d[idx]['geometry']['coordinates'][1];
+    coordinate = new google.maps.LatLng(lat, lng);
+    csv.push(coordinate);
+
+    // js bool option for marker?
+    /*
+    var marker = new google.maps.Marker({
+      position: coordinate,
+      map: map,
+      icon: setMarkerStyle()
+    });
+    */
+  }
+
+  loadHeatmap(csv);
+}
