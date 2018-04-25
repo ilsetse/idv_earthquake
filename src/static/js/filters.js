@@ -11,7 +11,8 @@ function applyFilters(data, filters) {
 function applyMinMagnitude(targetSlider, filters) {
     const filterFunc = t => {
         const sliderVal = targetSlider.value;
-        return t['properties']['mag'] >= sliderVal;
+        const isMagnitudeOn = $('#magnitude-filter-is-on')[0].checked;
+        return (t['properties']['mag'] >= sliderVal || !isMagnitudeOn);
     }
 
     filters.set('min-mag', filterFunc);
@@ -21,7 +22,8 @@ function applyMinMagnitude(targetSlider, filters) {
 function applyMaxMagnitude(targetSlider, filters) {
     const filterFunc = t => {
         const sliderVal = targetSlider.value;
-        return t['properties']['mag'] <= sliderVal;
+        const isMagnitudeOn = $('#magnitude-filter-is-on')[0].checked;
+        return (t['properties']['mag'] <= sliderVal || !isMagnitudeOn);
     }
 
     filters.set('max-mag', filterFunc);

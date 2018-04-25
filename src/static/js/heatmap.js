@@ -63,6 +63,15 @@ function setMarkerStyle(){
 function resetMaps(){
   // todo: close/clear visualization window
   map.fitBounds(boundsNew);
+
+  $('#magnitude-filter-is-on')[0].checked = false; 
+  $('#min-mag').val(0);
+  $('#max-mag').val(10);
+  $('#min-year').val(2000);
+  $('#max-year').val(2018);
+  
+  setMagnitudeRange();
+  setYearRange();
 } // endof resetMaps
 
 
@@ -148,8 +157,10 @@ function setRange(minId, maxId, minValId, maxValId, applyMin, applyMax) {
   globalFilters = applyMin($(minId)[0], globalFilters);
   globalFilters = applyMax($(maxId)[0], globalFilters);
 
-  $(minValId).text($(minId)[0].value)
-  $(maxValId).text($(maxId)[0].value)
+  const round = v => Math.round(v * 100) / 100;
+
+  $(minValId).text(round($(minId)[0].value))
+  $(maxValId).text(round($(maxId)[0].value))
 
   loadData(globalData, globalCsv, globalFilters);
 }
