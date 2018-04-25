@@ -5,8 +5,8 @@ html, body {
 }
 
 #map {
-  width: 512px;
-  height: 512px;
+  width: 95%;
+  height: 34em;
 }
 
 #options_panel {
@@ -18,18 +18,22 @@ html, body {
 }
 
 #interaction {
-  width: 512px;
-  height: 512px;
+  width: 95%;
+  height: 34em;
   border: 1px solid #333;
   position: relative;
 }
 
+#year-filter {
+  width: 100%;
+  position: absolute;
+  bottom: 1%;
+}
+
 .slider {
   -webkit-appearance: none;
-  width: 512px;
+  width: 100%;
   height: 22px;
-  position: absolute;
-  bottom: -12px;
   left: 0;
   background: #222;
   outline: none;
