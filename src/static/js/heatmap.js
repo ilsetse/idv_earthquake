@@ -1,5 +1,8 @@
+import * as filters from './filters.js';
+
 var map, heatmap, allowedBounds, globalData;
 var csv = [];
+var globalFilters = new Map();
 
 function initMap(){
 
