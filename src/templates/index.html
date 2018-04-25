@@ -30,12 +30,17 @@
      
       <div class='row'>
         <div class='six columns'>
-
           <div id='interaction'>
-            <input type='range' min='2000' max='2018' value='2010' class='slider' id='yearRange'>
+            Year Range - Minimum: <span id="year-min-val">2000</span>
+            <input type='range' min='2000' max='2018' value='2000' class='slider' id='min-year' onchange="setYearRange()">
+            Maximum: <span id="year-max-val">2018</span>
+            <input type='range' min='2000' max='2018' value='2018' class='slider' id='max-year' onchange="setYearRange()">
+            
+            Magnitude Range - Minimum: <span id="mag-min-val">0</span>
+            <input type='range' min='0' max='10' value='0' class='slider' id='min-mag' onchange="setMagnitudeRange()">
+            Maximum: <span id="mag-max-val">10</span>
+            <input type='range' min='0' max='10' value='10' class='slider' id='max-mag' onchange="setMagnitudeRange()">
           </div>
-
-
         </div>
       </div>
 
@@ -60,7 +65,7 @@
     </script>
 
     <script type="text/javascript" src='{{url_for('static', filename='js/heatmap.js')}}'></script>
-
+    <script type="text/javascript" src='{{url_for('static', filename='js/filters.js')}}'></script>
   </body>
 
 </html>

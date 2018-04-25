@@ -1,7 +1,5 @@
-import * as filters from './filters.js';
-
 var map, heatmap, allowedBounds, globalData;
-var csv = [];
+var globalCsv = [];
 var globalFilters = new Map();
 
 function initMap(){
@@ -76,7 +74,7 @@ function getCoordinates(){
     //url: 'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&updatedafter=2018-04-01',
     success: function(data) {
       globalData = data;
-      loadData(globalData, csv);
+      loadData(globalData, globalCsv, globalFilters);
     },
     error: function() {
       console.log('ERROR getData()');
@@ -118,10 +116,14 @@ var gradient = [
 	'rgba(255, 0, 0, 1)'
 ];
 
-function loadData(data, csv) {
-  d = data['features'];
+function loadData(data, csv, filters) {
+  d = applyFilters(data['features'], filters);
+  console.log('items selected', d.length);
   n = d.length;
   idx = 0;
+
+  csv = [];
+
   for (idx=0; idx<n; idx++){
     lng = d[idx]['geometry']['coordinates'][0];
     lat = d[idx]['geometry']['coordinates'][1];
@@ -138,5 +140,24 @@ function loadData(data, csv) {
     */
   }
 
+  globalCsv = csv;
   loadHeatmap(csv);
+}
+
+function setRange(minId, maxId, minValId, maxValId, applyMin, applyMax) {
+  globalFilters = applyMin($(minId)[0], globalFilters);
+  globalFilters = applyMax($(maxId)[0], globalFilters);
+
+  $(minValId).text($(minId)[0].value)
+  $(maxValId).text($(maxId)[0].value)
+
+  loadData(globalData, globalCsv, globalFilters);
+}
+
+function setMagnitudeRange() {
+  setRange('#min-mag', '#max-mag', '#mag-min-val', '#mag-max-val', applyMinMagnitude, applyMaxMagnitude)
+}
+
+function setYearRange() {
+  setRange('#min-year', '#max-year', '#year-min-val', '#year-max-val', applyMinYear, applyMaxYear)
 }
