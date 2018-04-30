@@ -24,6 +24,9 @@ html, body {
   position: relative;
 }
 
+#radarChart {
+}
+
 #year-filter {
   width: 100%;
   position: absolute;
@@ -62,3 +65,4 @@ html, body {
   border-radius: 50%;
   cursor: pointer;
 } 
+
