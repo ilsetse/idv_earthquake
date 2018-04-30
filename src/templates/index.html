@@ -38,8 +38,11 @@
 
           <div id="year-filter">
               Year Range - Minimum: <span id="year-min-val">2000</span>
-              <input type='range' min='2000' max='2018' value='2000' class='slider' id='min-year' onchange="setYearRange()">
-              <input type='range' min='2000' max='2018' value='2018' class='slider' id='max-year' onchange="setYearRange()">
+              <input type='range' min='2000' max='2018' value='2018' class='slider' id='min-year'>
+              <input type='range' min='2000' max='2018' value='2018' class='slider' id='max-year'>
+              <!-- <input type='range' min='2000' max='2018' value='2018' class='slider' id='min-year' onchange="setYearRange()">
+              <input type='range' min='2000' max='2018' value='2018' class='slider' id='min-year' onchange="setYearRange()"> -->
+              <button onclick="setYearRange()">Apply</button> 
               Maximum: <span id="year-max-val">2018</span>
           </div>
         </div>
@@ -50,14 +53,19 @@
         <div id="magnitude-filter" class='five columns'>
             <div>
               Magnitude Range
-              <input type='checkbox' id='magnitude-filter-is-on' onchange="setMagnitudeRange()">
+              <input type='checkbox' id='magnitude-filter-is-on' checked>
+              <button onclick="setMagnitudeRange()">Apply</button> 
             </div>
 
-            Minimum: <span id="mag-min-val">0</span>
-            <input type='range' min='0' max='10' value='0' class='slider' id='min-mag' onchange="setMagnitudeRange()" step="any">
+            Minimum: <span id="mag-min-val">2</span>
+            <input type='range' min='2' max='10' value='2' class='slider' id='min-mag' step="any">
+            <!-- <input type='range' min='0' max='10' value='10' class='slider' id='max-mag' onchange="setMagnitudeRange()" step="any"> -->
+
 
             Maximum: <span id="mag-max-val">10</span>
-            <input type='range' min='0' max='10' value='10' class='slider' id='max-mag' onchange="setMagnitudeRange()" step="any">
+            <input type='range' min='0' max='10' value='10' class='slider' id='max-mag' step="any">
+            <!-- <input type='range' min='0' max='10' value='10' class='slider' id='max-mag' onchange="setMagnitudeRange()" step="any"> -->
+
         </div>
     </div>
 
