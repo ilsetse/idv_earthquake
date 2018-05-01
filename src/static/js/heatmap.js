@@ -269,6 +269,7 @@ function loadHeatmap(csv){
 function loadData(data, csv, filters) {
   d = applyFilters(data['features'], filters);
   console.log('items selected', d.length);
+
   n = d.length;
   idx = 0;
 
@@ -292,12 +293,7 @@ function loadData(data, csv, filters) {
 
   globalCsv = csv;
   loadHeatmap(csv);
-	//console.log(globalData['features'][0]['properties']);
-	
-	/// d3
-	loadHistogram('#histogram', globalData);
-
-	
+	loadHistogram('#histogram', d, n);
 }
 
 function setRange(minId, maxId, minValId, maxValId, applyMin, applyMax) {
@@ -310,7 +306,7 @@ function setRange(minId, maxId, minValId, maxValId, applyMin, applyMax) {
   $(maxValId).text(round($(maxId)[0].value))
 
   loadData(globalData, globalCsv, globalFilters);
-	
+	loadHistogram('#histogram', globalData);
 }
 
 function setMagnitudeRange() {

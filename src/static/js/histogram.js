@@ -1,17 +1,17 @@
-function loadHistogram(id, d){
+function loadHistogram(id, d, data_length){
 	//console.log(d['features'][0]['properties']);
-	n = d['features'].length
 	
-	data = []
-	
-	
-	for (idx=0; idx<n; idx++){
-		mag = d['features'][idx]['properties']['mag'];
-		data.push(mag);
+	if (isNaN(data_length)) {
+		//console.log('isNan');
+		return;
 	}
 	
-	//var data = d3.range(1000).map(d3.randomBates(10));
-	//console.log(data);
+	var data = []
+	for (idx=0; idx<data_length; idx++){
+		mag = d[idx]['properties']['mag'];
+		data.push(mag);
+	}
+
 	
 	var margin = {top: 20, right: 20, bottom: 20, left: 20},
 	width = Math.min(350, window.innerWidth - 2) - margin.left - margin.right,
@@ -45,6 +45,7 @@ function loadHistogram(id, d){
 	.attr("class", "bar")
 	.attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; });
 	
+	//console.log(x(bins[0].x1));
 	bar.append("rect")
 	.attr("x", 1)
 	.attr("width", x(bins[0].x1) - x(bins[0].x0) - 1)
