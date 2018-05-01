@@ -201,22 +201,13 @@ function initMap(){
     var lng = event.latLng.lng();
     newLatLng = new google.maps.LatLng(lat,lng);
     map.setCenter(newLatLng);
-    console.log(map.getBounds());
+    //console.log(map.getBounds());
   });
 
  } // endof initMap();
 
 
 //// interaction
-function setMarkerStyle(){
-  return{
-    path: google.maps.SymbolPath.CIRCLE,
-    fillColor: 'red',
-    fillOpacity: .2,
-    scale: 2,
-    strokeWeight: .1
-  };
-}
 
 function resetMaps(){
   // todo: close/clear visualization window
@@ -237,8 +228,8 @@ function resetMaps(){
 function getCoordinates(){
   // use uncompressed JQuery, not slim minified!
   $.ajax({
-    url: 'static/data/aug_01_earthquake_data.json',
-    //url: 'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&updatedafter=2018-04-01',
+    //url: 'static/data/aug_01_earthquake_data.json',
+    url: 'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&updatedafter=2018-03-01',
     success: function(data) {
       globalData = data;
       loadData(globalData, globalCsv, globalFilters);
@@ -265,35 +256,41 @@ function loadHeatmap(csv){
 }
 
 
-
+// load filtered data
 function loadData(data, csv, filters) {
   d = applyFilters(data['features'], filters);
   console.log('items selected', d.length);
 
   n = d.length;
-  idx = 0;
+	
 
-  csv = [];
-
+	
+  var coordinates = [];
+	var magnitude = [];
+	var felt = [];
+	
+	idx = 0;
   for (idx=0; idx<n; idx++){
+		
+		// magnitude
+		magnitude.push(d[idx]['properties']['mag']);
+		
+		// felt
+		tmp = d[idx]['properties']['felt'];
+		if (tmp==null) { tmp = 0 }
+		felt.push(tmp);
+		
+		// coordinates
     lng = d[idx]['geometry']['coordinates'][0];
     lat = d[idx]['geometry']['coordinates'][1];
     coordinate = new google.maps.LatLng(lat, lng);
-    csv.push(coordinate);
-
-    // js bool option for marker?
-    /*
-    var marker = new google.maps.Marker({
-      position: coordinate,
-      map: map,
-      icon: setMarkerStyle()
-    });
-    */
+    coordinates.push(coordinate);
   }
 
-  globalCsv = csv;
-  loadHeatmap(csv);
-	loadHistogram('#histogram', d, n);
+  globalCsv = coordinates;
+  loadHeatmap(coordinates);
+	loadHistogram('#histogram', magnitude);
+	//loadMarker(d, n);
 }
 
 function setRange(minId, maxId, minValId, maxValId, applyMin, applyMax) {
@@ -317,70 +314,4 @@ function setYearRange() {
   setRange('#min-year', '#max-year', '#year-min-val', '#year-max-val', applyMinYear, applyMaxYear)
 }
 
-
-
-
-//// radar chart
-//////////////////////////////////////////////////////////////
-//////////////////////// Set-Up //////////////////////////////
-//////////////////////////////////////////////////////////////
-var margin = {top: 10, right: 10, bottom: 10, left: 10},
-	width = Math.min(350, window.innerWidth - 2) - margin.left - margin.right,
-	height = Math.min(width, window.innerHeight - margin.top - margin.bottom - 20);
-
-//////////////////////////////////////////////////////////////
-////////////////////////// Data //////////////////////////////
-//////////////////////////////////////////////////////////////
-
-
-var data = [
-			[//iPhone
-				{axis:"Battery Life",value:0.22},
-				{axis:"Brand",value:0.28},
-				{axis:"Contract Cost",value:0.29},
-				{axis:"Design And Quality",value:0.17},
-				{axis:"Have Internet Connectivity",value:0.22},
-				{axis:"Large Screen",value:0.02},
-				{axis:"Price Of Device",value:0.21},
-				{axis:"To Be A Smartphone",value:0.50}
-			],
-			[//Samsung
-				{axis:"Battery Life",value:0.27},
-				{axis:"Brand",value:0.16},
-				{axis:"Contract Cost",value:0.35},
-				{axis:"Design And Quality",value:0.13},
-				{axis:"Have Internet Connectivity",value:0.20},
-				{axis:"Large Screen",value:0.13},
-				{axis:"Price Of Device",value:0.35},
-				{axis:"To Be A Smartphone",value:0.38}
-			],
-			[//Nokia Smartphone
-				{axis:"Battery Life",value:0.26},
-				{axis:"Brand",value:0.10},
-				{axis:"Contract Cost",value:0.30},
-				{axis:"Design And Quality",value:0.14},
-				{axis:"Have Internet Connectivity",value:0.22},
-				{axis:"Large Screen",value:0.04},
-				{axis:"Price Of Device",value:0.41},
-				{axis:"To Be A Smartphone",value:0.30}
-			]
-		];
-//////////////////////////////////////////////////////////////
-//////////////////// Draw the Chart //////////////////////////
-//////////////////////////////////////////////////////////////
-var color = d3.scaleOrdinal()
-	.range(["#EDC951","#CC333F","#00A0B0"]);
-
-var radarChartOptions = {
-	w: width,
-	h: height,
-	margin: margin,
-	maxValue: 0.5,
-	levels: 5,
-	roundStrokes: true,
-	color: color
-};
-
-//Call function to draw the Radar chart
-//RadarChart("#radarChart", data, radarChartOptions);
 

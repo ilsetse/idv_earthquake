@@ -1,24 +1,10 @@
-function loadHistogram(id, d, data_length){
-	//console.log(d['features'][0]['properties']);
+function loadHistogram(id, mag){
 	
-	// todo probably a while loop is better?
-	// or some sort of continuous check.
-	if (isNaN(data_length)) {
-		//console.log('isNan');
+	// todo: replace with try/except
+	if (isNaN(mag.length)) {
+		d3.select('.bar').remove();
 		return;
 	}
-	
-	var mag = []
-	var felt = []
-	for (idx=0; idx<data_length; idx++){
-		mag.push(d[idx]['properties']['mag']);
-		
-		tmp = d[idx]['properties']['felt'];
-		if (tmp==null) { tmp = 0 }
-		felt.push(tmp);
-	}
-
-	//console.log(felt);
 	
 	var margin = {top: 20, right: 20, bottom: 20, left: 20},
 	width = Math.min(350, window.innerWidth - 2) - margin.left - margin.right,
@@ -58,13 +44,14 @@ function loadHistogram(id, d, data_length){
 	.attr("x", 1)
 	.attr("width", x(bins[0].x1) - x(bins[0].x0) - 1) // changes width to prevent overlap with center of bins
 	.attr("height", function(d) { return height - y(d.length); });
+	
 
 	bar.append("text")
-	.attr("dy", ".75em")
-	.attr("y", -10)
-	.attr("x", (x(bins[0].x1) - x(bins[0].x0)) / 2)
-	.attr("text-anchor", "middle")
-	.text(function(d) { return formatCount(d.length); });
+		.attr("dy", ".75em")
+		.attr("y", -10)
+		.attr("x", (x(bins[0].x1) - x(bins[0].x0)) / 2)
+		.attr("text-anchor", "middle")
+		.text(function(d) { return formatCount(d.length); });
 	
 	
 	g.append("g")
@@ -72,14 +59,5 @@ function loadHistogram(id, d, data_length){
 	.attr("transform", "translate(0," + height + ")")
 	.call(d3.axisBottom(x));
 
-	
-	// define the line
-	var valueline = d3.line()
-	.x(function(d) { return x(d.date); })
-	.y(function(d) { return y(d.close); });
-
-
-	
-}
-
+} // endof loadHistogram
 
