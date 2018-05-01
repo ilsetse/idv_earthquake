@@ -45,27 +45,28 @@ function loadHistogram(id, d, data_length){
 	.domain([0, d3.max(bins, function(d) { return d.length; })])
 	.range([height, 0]);
 	
+
 	var bar = g.selectAll(".bar")
 	.data(bins)
 	.enter().append("g")
 	.attr("class", "bar")
 	.attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; });
 	
+	
 	//console.log(x(bins[0].x1));
 	bar.append("rect")
 	.attr("x", 1)
 	.attr("width", x(bins[0].x1) - x(bins[0].x0) - 1) // changes width to prevent overlap with center of bins
 	.attr("height", function(d) { return height - y(d.length); });
-	
-	// todo bin count
-	/*
+
 	bar.append("text")
 	.attr("dy", ".75em")
-	.attr("y", 6)
+	.attr("y", -10)
 	.attr("x", (x(bins[0].x1) - x(bins[0].x0)) / 2)
 	.attr("text-anchor", "middle")
 	.text(function(d) { return formatCount(d.length); });
-	*/
+	
+	
 	g.append("g")
 	.attr("class", "axis axis--x")
 	.attr("transform", "translate(0," + height + ")")
