@@ -212,17 +212,14 @@ function initMap(){
 function resetMaps(){
   // todo: close/clear visualization window
   map.fitBounds(boundsNew);
-
-  $('#magnitude-filter-is-on')[0].checked = true;
-  $('#min-mag').val(0);
-  $('#max-mag').val(10);
-  $('#min-year').val(2000);
-  $('#max-year').val(2018);
 	
 	$('#actual-felt-on')[0].checked = false;
-	
-  setMagnitudeRange();
-  setYearRange();
+  
+  getSlider('year', 2000, 2018);
+  getSlider('magnitude', 0, 10);
+  
+  globalFilters = new Map();
+  loadData(globalData, globalCsv, globalFilters);
 } // endof resetMaps
 
 
@@ -295,14 +292,12 @@ function loadData(data, csv, filters) {
 	//loadMarker(d, n);
 }
 
-function setRange(minId, maxId, minValId, maxValId, applyMin, applyMax) {
-  globalFilters = applyMin($(minId)[0], globalFilters);
-  globalFilters = applyMax($(maxId)[0], globalFilters);
+/* Applies filters when sliders are interacted with. Used by both sliders. */
+function setRange(namePrefix, minVal, maxVal) {
+  console.log(namePrefix, minVal, maxVal);
 
-  const round = v => Math.round(v * 100) / 100;
-
-  $(minValId).text(round($(minId)[0].value))
-  $(maxValId).text(round($(maxId)[0].value))
+  globalFilters = validFilters['min-' + namePrefix](minVal, globalFilters);
+  globalFilters = validFilters['max-' + namePrefix](maxVal, globalFilters);
 
   loadData(globalData, globalCsv, globalFilters);
 }
@@ -311,8 +306,7 @@ function setMagnitudeRange() {
   setRange('#min-mag', '#max-mag', '#mag-min-val', '#mag-max-val', applyMinMagnitude, applyMaxMagnitude)
 }
 
-function setYearRange() {
-  setRange('#min-year', '#max-year', '#year-min-val', '#year-max-val', applyMinYear, applyMaxYear)
+/* Loads data again. Used by magnitude-checkbox. */
+function reapplyFilters() {
+  loadData(globalData, globalCsv, globalFilters);
 }
-
-

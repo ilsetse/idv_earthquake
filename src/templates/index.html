@@ -35,12 +35,13 @@
 	    			<div id='visual'></div>
           </div>
 
-          <div id="year-filter">
-              Year Range - Minimum: <span id="year-min-val">2000</span>
-              <input type='range' min='2000' max='2018' value='2000' class='slider' id='min-year' onchange="setYearRange()">
-              <input type='range' min='2000' max='2018' value='2018' class='slider' id='max-year' onchange="setYearRange()">
-              Maximum: <span id="year-max-val">2018</span>
+          <div>
+            <p>
+              <label for="year-amount">Year range:</label>
+              <input type="text" id="year-amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+            </p>
           </div>
+          <div id="year-slider-range"></div>
         </div>
       </div>
     </div>
@@ -48,21 +49,17 @@
     <div class='row'>
         <div id="magnitude-filter" class='five columns'>
             <div>
-              Magnitude Range
-              <input type='checkbox' id='magnitude-filter-is-on' onchange="setMagnitudeRange()" checked />
-							
 							Recorded Magnitude vs Felt Magnitude
 							<input type='checkbox' id='actual-felt-on' onchange="loadLineChart()" />
-							
+					  </div>
 
-							
-            </div>
-
-            Minimum: <span id="mag-min-val">0</span>
-            <input type='range' min='0' max='10' value='0' class='slider' id='min-mag' onchange="setMagnitudeRange()" step="any">
-
-            Maximum: <span id="mag-max-val">10</span>
-            <input type='range' min='0' max='10' value='10' class='slider' id='max-mag' onchange="setMagnitudeRange()" step="any">
+            <p>
+              <label for="magnitude-amount">Magnitude range:</label>
+              <input type="text" id="magnitude-amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+              <input type='checkbox' id='magnitude-filter-is-on' onchange="reapplyFilters()" checked>
+            </p>
+            
+            <div id="magnitude-slider-range"></div>
         </div>
     </div>
 
@@ -88,7 +85,10 @@
     <script type="text/javascript" src='{{url_for('static', filename='js/heatmap.js')}}'></script>
     <script type="text/javascript" src='{{url_for('static', filename='js/histogram.js')}}'></script>
     <script type="text/javascript" src='{{url_for('static', filename='js/filters.js')}}'></script>
-    
+    <script>
+      getSlider('year', 2000, 2018);
+      getSlider('magnitude', 0, 10);
+    </script>
   </body>
 
 </html>
