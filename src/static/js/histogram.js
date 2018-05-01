@@ -19,7 +19,7 @@ function loadHistogram(mag){
 		.attr("height", 600 + margin.top + margin.bottom);
 
 	var g = svg.append("g")
-		.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 	
 	var x = d3.scaleLinear()
 		.domain([0,10])

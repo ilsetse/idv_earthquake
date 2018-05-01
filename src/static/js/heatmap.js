@@ -228,7 +228,7 @@ function getCoordinates(){
   // use uncompressed JQuery, not slim minified!
   $.ajax({
     //url: 'static/data/aug_01_earthquake_data.json',
-    url: 'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&updatedafter=2018-03-01',
+    url: 'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&updatedafter=2018-02-01',
     success: function(data) {
       globalData = data;
       loadData(globalData, globalCsv, globalFilters);
@@ -259,14 +259,14 @@ function loadHeatmap(csv){
 function loadData(data, csv, filters) {
   d = applyFilters(data['features'], filters);
   console.log('items selected', d.length);
-
+	//console.log(d);
   n = d.length;
-	
-
 	
   var coordinates = [];
 	var magnitude = [];
 	var felt = [];
+  var dates = [];
+	var depths = [];
 	
 	idx = 0;
   for (idx=0; idx<n; idx++){
@@ -275,6 +275,7 @@ function loadData(data, csv, filters) {
 		magnitude.push(d[idx]['properties']['mag']);
 		
 		// felt
+		// todo check decimals. 104 -> 10.4
 		tmp = d[idx]['properties']['felt'];
 		if (tmp==null) { tmp = 0 }
 		felt.push(tmp);
@@ -284,17 +285,27 @@ function loadData(data, csv, filters) {
     lat = d[idx]['geometry']['coordinates'][1];
     coordinate = new google.maps.LatLng(lat, lng);
     coordinates.push(coordinate);
+		
+		// date
+		date = d[idx]['properties']['time'];
+		date = new Date(date).toString().slice(0,15);
+		dates.push(date);
+		
+		// depth
+		depths.push(d[idx]['geometry']['coordinates'][2]);
   }
 
   globalCsv = coordinates;
   loadHeatmap(coordinates);
 	loadHistogram(magnitude);
+	loadLineChart(dates, magnitude, felt);
+	
 	//loadMarker(d, n);
 }
 
 /* Applies filters when sliders are interacted with. Used by both sliders. */
 function setRange(namePrefix, minVal, maxVal) {
-  console.log(namePrefix, minVal, maxVal);
+  //console.log(namePrefix, minVal, maxVal);
 
   globalFilters = validFilters['min-' + namePrefix](minVal, globalFilters);
   globalFilters = validFilters['max-' + namePrefix](maxVal, globalFilters);

@@ -22,7 +22,17 @@ html, body {
   height: 34em;
   border: 0.5px dotted #eee;
   position: relative;
+	padding: 40px;
 }
+
+
+.line {
+	fill: none;
+	stroke: red;
+	stroke-width: 2px;
+}
+
+rect { fill: #6897bb; }
 
 /* histogram style */
 .bar rect {
@@ -39,6 +49,7 @@ html, body {
   width: 100%;
   position: absolute;
   bottom: 1%;
+  display: none;
 }
 
 .slider {
