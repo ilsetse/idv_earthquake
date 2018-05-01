@@ -24,9 +24,16 @@ html, body {
   position: relative;
 }
 
-#radar_chart {
-
+/* histogram style */
+.bar rect {
+	fill: #6897bb;
 }
+
+.bar text {
+	fill: #fff;
+	font: 10px sans-serif;
+}
+
 
 #year-filter {
   width: 100%;
