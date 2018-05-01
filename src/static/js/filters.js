@@ -66,9 +66,6 @@ function getSlider(namePrefix, minVal, maxVal) {
 
                 $( "#" + namePrefix + "-amount" ).val( min + " - " + max );
                 setRange(namePrefix, min, max);
-            },
-            reset: function( event, ui ) {
-                console.log('fjdsklaf');
             }
             });
             $( "#" + namePrefix + "-amount" ).val( $( "#" + namePrefix + "-slider-range" ).slider( "values", 0 ) +
