@@ -214,13 +214,12 @@ function resetMaps(){
   map.fitBounds(boundsNew);
 
   $('#magnitude-filter-is-on')[0].checked = false; 
-  $('#min-mag').val(0);
-  $('#max-mag').val(10);
-  $('#min-year').val(2000);
-  $('#max-year').val(2018);
   
-  setMagnitudeRange();
-  setYearRange();
+  getSlider('year', 2000, 2018);
+  getSlider('magnitude', 0, 10);
+  
+  globalFilters = new Map();
+  loadData(globalData, globalCsv, globalFilters);
 } // endof resetMaps
 
 
@@ -293,25 +292,85 @@ function loadData(data, csv, filters) {
 	//loadMarker(d, n);
 }
 
-function setRange(minId, maxId, minValId, maxValId, applyMin, applyMax) {
-  globalFilters = applyMin($(minId)[0], globalFilters);
-  globalFilters = applyMax($(maxId)[0], globalFilters);
+/* Applies filters when sliders are interacted with. Used by both sliders. */
+function setRange(namePrefix, minVal, maxVal) {
+  console.log(namePrefix, minVal, maxVal);
 
-  const round = v => Math.round(v * 100) / 100;
-
-  $(minValId).text(round($(minId)[0].value))
-  $(maxValId).text(round($(maxId)[0].value))
+  globalFilters = validFilters['min-' + namePrefix](minVal, globalFilters);
+  globalFilters = validFilters['max-' + namePrefix](maxVal, globalFilters);
 
   loadData(globalData, globalCsv, globalFilters);
-	loadHistogram('#histogram', globalData);
 }
 
-function setMagnitudeRange() {
-  setRange('#min-mag', '#max-mag', '#mag-min-val', '#mag-max-val', applyMinMagnitude, applyMaxMagnitude)
+/* Loads data again. Used by magnitude-checkbox. */
+function reapplyFilters() {
+  loadData(globalData, globalCsv, globalFilters);
 }
 
-function setYearRange() {
-  setRange('#min-year', '#max-year', '#year-min-val', '#year-max-val', applyMinYear, applyMaxYear)
-}
+<<<<<<< HEAD
+=======
+//// radar chart
+//////////////////////////////////////////////////////////////
+//////////////////////// Set-Up //////////////////////////////
+//////////////////////////////////////////////////////////////
+var margin = {top: 10, right: 10, bottom: 10, left: 10},
+	width = Math.min(350, window.innerWidth - 2) - margin.left - margin.right,
+	height = Math.min(width, window.innerHeight - margin.top - margin.bottom - 20);
 
+//////////////////////////////////////////////////////////////
+////////////////////////// Data //////////////////////////////
+//////////////////////////////////////////////////////////////
+
+
+var data = [
+			[//iPhone
+				{axis:"Battery Life",value:0.22},
+				{axis:"Brand",value:0.28},
+				{axis:"Contract Cost",value:0.29},
+				{axis:"Design And Quality",value:0.17},
+				{axis:"Have Internet Connectivity",value:0.22},
+				{axis:"Large Screen",value:0.02},
+				{axis:"Price Of Device",value:0.21},
+				{axis:"To Be A Smartphone",value:0.50}
+			],
+			[//Samsung
+				{axis:"Battery Life",value:0.27},
+				{axis:"Brand",value:0.16},
+				{axis:"Contract Cost",value:0.35},
+				{axis:"Design And Quality",value:0.13},
+				{axis:"Have Internet Connectivity",value:0.20},
+				{axis:"Large Screen",value:0.13},
+				{axis:"Price Of Device",value:0.35},
+				{axis:"To Be A Smartphone",value:0.38}
+			],
+			[//Nokia Smartphone
+				{axis:"Battery Life",value:0.26},
+				{axis:"Brand",value:0.10},
+				{axis:"Contract Cost",value:0.30},
+				{axis:"Design And Quality",value:0.14},
+				{axis:"Have Internet Connectivity",value:0.22},
+				{axis:"Large Screen",value:0.04},
+				{axis:"Price Of Device",value:0.41},
+				{axis:"To Be A Smartphone",value:0.30}
+			]
+		];
+//////////////////////////////////////////////////////////////
+//////////////////// Draw the Chart //////////////////////////
+//////////////////////////////////////////////////////////////
+var color = d3.scaleOrdinal()
+	.range(["#EDC951","#CC333F","#00A0B0"]);
+
+var radarChartOptions = {
+	w: width,
+	h: height,
+	margin: margin,
+	maxValue: 0.5,
+	levels: 5,
+	roundStrokes: true,
+	color: color
+};
+
+//Call function to draw the Radar chart
+//RadarChart("#radarChart", data, radarChartOptions);
+>>>>>>> dual range-sliders to single sliders
 
