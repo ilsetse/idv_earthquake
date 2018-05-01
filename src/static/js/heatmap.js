@@ -213,12 +213,14 @@ function resetMaps(){
   // todo: close/clear visualization window
   map.fitBounds(boundsNew);
 
-  $('#magnitude-filter-is-on')[0].checked = false; 
+  $('#magnitude-filter-is-on')[0].checked = true;
   $('#min-mag').val(0);
   $('#max-mag').val(10);
   $('#min-year').val(2000);
   $('#max-year').val(2018);
-  
+	
+	$('#actual-felt-on')[0].checked = false;
+	
   setMagnitudeRange();
   setYearRange();
 } // endof resetMaps
@@ -289,7 +291,7 @@ function loadData(data, csv, filters) {
 
   globalCsv = coordinates;
   loadHeatmap(coordinates);
-	loadHistogram('#histogram', magnitude);
+	loadHistogram(magnitude);
 	//loadMarker(d, n);
 }
 
@@ -303,7 +305,6 @@ function setRange(minId, maxId, minValId, maxValId, applyMin, applyMax) {
   $(maxValId).text(round($(maxId)[0].value))
 
   loadData(globalData, globalCsv, globalFilters);
-	loadHistogram('#histogram', globalData);
 }
 
 function setMagnitudeRange() {
