@@ -61,7 +61,12 @@ function loadLineChart(date, mag, felt){
 		.attr("dy", ".15em")
 		.attr("transform", "rotate(-78)");
 	
-	
+	svg.append("text")
+	.attr("x", width-30)
+	.attr("y", 30)
+	.attr("text-anchor", "middle")
+	.style("font-size", "16px")
+	.text("Magnitude by Date");
 	////////////////////////////////////////
 	///////////////// LINE /////////////////
 	////////////////////////////////////////

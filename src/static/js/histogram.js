@@ -54,6 +54,13 @@ function loadHistogram(mag){
 		.attr("text-anchor", "middle")
 		.text(function(d) { return formatCount(d.length); });
 	
+	svg.append("text")
+	.attr("x", width-30)
+	.attr("y", 30)
+	.attr("text-anchor", "middle")
+	.style("font-size", "16px")
+	.text("Magnitude Frequency");
+	
 	
 	g.append("g")
 	.attr("class", "axis axis--x")
