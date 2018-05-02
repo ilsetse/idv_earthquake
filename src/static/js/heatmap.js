@@ -1,4 +1,5 @@
 var map, heatmap, allowedBounds, globalData;
+var globalCsvByBounds = [];
 var globalCsv = [];
 var globalFilters = new Map();
 
@@ -201,8 +202,13 @@ function initMap(){
     var lng = event.latLng.lng();
     newLatLng = new google.maps.LatLng(lat,lng);
     map.setCenter(newLatLng);
-    //console.log(map.getBounds());
-  });
+	});
+	
+	map.addListener('bounds_changed', function(event) {
+		if (globalData) {
+			loadData(globalData, globalCsv, globalFilters);
+		}
+	})
 
  } // endof initMap();
 
@@ -267,12 +273,18 @@ function loadData(data, csv, filters) {
 	var felt = [];
   var dates = [];
 	var depths = [];
+
+	const mapBounds = map.getBounds()
 	
 	idx = 0;
   for (idx=0; idx<n; idx++){
+
+		const current = d[idx];
 		
 		// magnitude
-		magnitude.push(d[idx]['properties']['mag']);
+		if (isInBounds(mapBounds, current)) {
+			magnitude.push(current['properties']['mag']);
+		}
 		
 		// felt
 		// todo check decimals. 104 -> 10.4
@@ -281,18 +293,18 @@ function loadData(data, csv, filters) {
 		felt.push(tmp);
 		
 		// coordinates
-    lng = d[idx]['geometry']['coordinates'][0];
-    lat = d[idx]['geometry']['coordinates'][1];
+    lng = current['geometry']['coordinates'][0];
+    lat = current['geometry']['coordinates'][1];
     coordinate = new google.maps.LatLng(lat, lng);
     coordinates.push(coordinate);
 		
 		// date
-		date = d[idx]['properties']['time'];
+		date = current['properties']['time'];
 		date = new Date(date).toString().slice(0,15);
 		dates.push(date);
 		
 		// depth
-		depths.push(d[idx]['geometry']['coordinates'][2]);
+		depths.push(current['geometry']['coordinates'][2]);
   }
 
   globalCsv = coordinates;
@@ -304,7 +316,8 @@ function loadData(data, csv, filters) {
 	//loadMarker(d, n);
 }
 
-/* Applies filters when sliders are interacted with. Used by both sliders. */
+/* Applies filters when sliders are interacted with. Used by both sliders.
+`validFilters` are defined in filters.js */
 function setRange(namePrefix, minVal, maxVal) {
   //console.log(namePrefix, minVal, maxVal);
 

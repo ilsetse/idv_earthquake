@@ -1,11 +1,10 @@
 function loadHistogram(mag){
 	
 	// todo: replace with try/except
-	if (isNaN(mag.length)) {
+	if (isNaN(mag.length) || mag.length == 0) {
 		d3.select('.bar').remove();
 		return;
 	}
-	
 
 	var margin = {top: 20, right: 20, bottom: 20, left: 20},
 	width = Math.min(350, window.innerWidth - 2) - margin.left - margin.right,
@@ -40,12 +39,13 @@ function loadHistogram(mag){
 	.attr("class", "bar")
 	.attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; });
 	
-	
+	const barWidth = x(bins[0].x1) - x(bins[0].x0) - 1;
+
 	//console.log(x(bins[0].x1));
 	bar.append("rect")
 	.attr("x", 1)
 	// changes width to prevent overlap with center of bins
-	.attr("width", x(bins[0].x1) - x(bins[0].x0) - 1)
+	.attr("width", barWidth >= 0 ? barWidth : 0)
 	.attr("height", function(d) { return height - y(d.length); });
 	
 

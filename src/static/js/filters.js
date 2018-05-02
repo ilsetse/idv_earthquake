@@ -80,3 +80,13 @@ const validFilters =
      'max-year': applyMaxYear,
      'min-magnitude': applyMinMagnitude,
      'max-magnitude': applyMaxMagnitude}
+
+function isInBounds(bounds, point) {
+    const min = bounds.getSouthWest();
+    const max = bounds.getNorthEast();
+
+    const lat = point['geometry']['coordinates'][1];
+    const lng = point['geometry']['coordinates'][0];
+
+    return min.lat() <= lat && lat <= max.lat() && min.lng() <= lng && lng <= max.lng();
+}
