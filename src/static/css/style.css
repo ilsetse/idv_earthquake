@@ -18,11 +18,11 @@ html, body {
 }
 
 #interaction {
-  width: 95%;
+  width: 85%;
   height: 34em;
-  border: 0.5px dotted #eee;
+ 
   position: relative;
-	padding: 40px;
+	padding: 30px;
 }
 
 

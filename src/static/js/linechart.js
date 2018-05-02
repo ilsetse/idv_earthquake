@@ -14,7 +14,7 @@ function loadLineChart(date, mag, felt){
 	height = Math.min(width, window.innerHeight - margin.top - margin.bottom - 20);
 	*/
 	var margin = 65;
-	var width = 350;
+	var width = 360;
 	var height = 300;
 	
 	d3.select('#visual').select("svg").remove();
@@ -28,7 +28,7 @@ function loadLineChart(date, mag, felt){
 	
 	var y = d3.scaleLinear()
 		.nice()
-		.domain([-3,10])
+		.domain([-2,10])
 		.range([height,0]);
 	
 	var svg = d3.select("#visual").append("svg")

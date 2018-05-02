@@ -6,7 +6,7 @@ function loadHistogram(mag){
 		return;
 	}
 	
-	
+
 	var margin = {top: 20, right: 20, bottom: 20, left: 20},
 	width = Math.min(350, window.innerWidth - 2) - margin.left - margin.right,
 	height = Math.min(width, window.innerHeight - margin.top - margin.bottom - 20);
@@ -23,10 +23,11 @@ function loadHistogram(mag){
 	
 	var x = d3.scaleLinear()
 		.domain([0,10])
+		.nice()
 		.rangeRound([0, width]);
 
 	var bins = d3.histogram()
-		.thresholds(x.ticks(20))(mag);
+		.thresholds(x.ticks(10))(mag);
 	
 	var y = d3.scaleLinear()
 	.domain([0, d3.max(bins, function(d) { return d.length; })])
@@ -43,7 +44,8 @@ function loadHistogram(mag){
 	//console.log(x(bins[0].x1));
 	bar.append("rect")
 	.attr("x", 1)
-	.attr("width", x(bins[0].x1) - x(bins[0].x0) - 1) // changes width to prevent overlap with center of bins
+	// changes width to prevent overlap with center of bins
+	.attr("width", x(bins[0].x1) - x(bins[0].x0) - 1)
 	.attr("height", function(d) { return height - y(d.length); });
 	
 
@@ -63,9 +65,10 @@ function loadHistogram(mag){
 	
 	
 	g.append("g")
-	.attr("class", "axis axis--x")
 	.attr("transform", "translate(0," + height + ")")
 	.call(d3.axisBottom(x));
+	
+	//g.append("g").call(d3.axisLeft(y));
 
 } // endof loadHistogram
 
