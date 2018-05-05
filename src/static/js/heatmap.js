@@ -1,4 +1,4 @@
-var map, heatmap, allowedBounds, globalData;
+var map, heatmap, points, allowedBounds, globalData;
 var globalCsvByBounds = [];
 var globalCsv = [];
 var globalFilters = new Map();
@@ -213,6 +213,7 @@ function initMap(){
  } // endof initMap();
 
 
+
 //// interaction
 
 function resetMaps(){
@@ -312,8 +313,7 @@ function loadData(data, csv, filters) {
 	loadHistogram(magnitude);
 	console.log(dates);
 	loadLineChart(dates, magnitude, felt);
-	
-	//loadMarker(d, n);
+	loadMarker(d, n);
 }
 
 /* Applies filters when sliders are interacted with. Used by both sliders.
