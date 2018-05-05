@@ -37,7 +37,7 @@ function loadMarker(d, data_length, zoom) {
 			'</div>' +
 			// '<h1 id="firstHeading" class="firstHeading">Hello</h1>' +
 			'<div id="bodyContent">' +
-			'<p><b>' + place + '</b><b> Date: ' + date + '</b><b>Magnitude: ' + magnitude + '</b></p>' +
+			'<p><b>' + place + '</br><b> Date: ' + date + '</br><b>Magnitude: ' + magnitude + '</br></p>' +
 			'</div>' +
 			'</div>';
 
@@ -114,5 +114,4 @@ function getCircle(magnitude, zoom) {
 		strokeWeight: .5
 	};
 }
-
 
