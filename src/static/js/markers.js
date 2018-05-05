@@ -1,14 +1,21 @@
-
+var markers = [];
 //////////////////////////////////////////
 ///////////////// MARKERS ////////////////
 //////////////////////////////////////////
 
 // js bool option for marker?
 
-function loadMarker(d, data_length) {
-	var markers = [];
+function clearMarkers() {
+	markers.map(m => m.setMap(null));
+	markers.length = 0;
+}
+
+function loadMarker(d, data_length, zoom) {
 	idx = 0;
-	for (idx = 0; idx < n; idx++) {
+
+	clearMarkers();
+
+	for (idx = 0; idx < d.length; idx++) {
 		lng = d[idx]['geometry']['coordinates'][0];
 		lat = d[idx]['geometry']['coordinates'][1];
 		coordinate = new google.maps.LatLng(lat, lng);
@@ -16,7 +23,7 @@ function loadMarker(d, data_length) {
 		var marker = new google.maps.Marker({
 			position: coordinate,
 			map: map,
-			icon: getCircle(d[idx]['properties']['mag'])
+			icon: getCircle(d[idx]['properties']['mag'], zoom)
 			//icon: styleFeature(d[idx]['properties']['mag'])
 			// icon: setMarkerStyle()
 		});
@@ -51,16 +58,8 @@ function loadMarker(d, data_length) {
 		marker.addListener('click', infoCallback(infowindow, marker));
 		markers.push(marker);
 	}
-	var pointArray = new google.maps.MVCArray(markers);
-	//console.log(pointArray);
 
-	if (points) points.setMap(null);
-
-	points = new google.maps.visualization.HeatmapLayer({
-		data: pointArray,
-		dissipating: true
-	});
-	points.setMap(map);
+	markers.map(m => m.setMap(map));
 }
 function infoCallback(infowindow, marker) { return function () { infowindow.open(map, marker); }; }
 
@@ -95,20 +94,22 @@ function infoCallback(infowindow, marker) { return function () { infowindow.open
 // }
 
 // Marker with magnitude determing the size
-function getCircle(magnitude) {
-	// if (magnitude > 4) {
-	//   var colour = 'red';
-	//   console.log(colour);
-	// } else if (magnitude < 4) {
-	//   var colour = 'blue';
-	//   console.log(colour);
+function getCircle(magnitude, zoom) {
+	var colour = '';
 
-	// }
+	if (magnitude < 4) {
+		colour = 'green';
+	} else if (magnitude >= 4 && magnitude < 6) {
+		colour = 'yellow';
+	} else {
+		colour = 'red';
+	}
+
 	return {
 		path: google.maps.SymbolPath.CIRCLE,
-		fillColor: 'red',
+		fillColor: colour,
 		fillOpacity: .2,
-		scale: Math.pow(2, magnitude) / 2 / 5,
+		scale: (Math.pow(2, magnitude) / 2 / 5) * zoom,
 		strokeColor: 'white',
 		strokeWeight: .5
 	};

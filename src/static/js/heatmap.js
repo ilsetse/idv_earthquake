@@ -1,10 +1,11 @@
-var map, heatmap, points, allowedBounds, globalData;
+var map, allowedBounds, globalData;
+var heatmap = [];
 var globalCsvByBounds = [];
 var globalCsv = [];
 var globalFilters = new Map();
+const zoomLvl = 8;
 
 function initMap(){
-
   map = new google.maps.Map($('#map')[0],{
     zoom: 1,
     minZoom: 1,
@@ -197,7 +198,7 @@ function initMap(){
 
   // click to zoom
   map.addListener('click', function(event){
-    map.setZoom(4);
+    map.setZoom(zoomLvl);
     var lat = event.latLng.lat();
     var lng = event.latLng.lng();
     newLatLng = new google.maps.LatLng(lat,lng);
@@ -252,9 +253,8 @@ function loadHeatmap(csv){
   var pointArray = new google.maps.MVCArray(csv);
   //console.log(pointArray);
 
-  if(heatmap) heatmap.setMap(null);
-
-  heatmap = new google.maps.visualization.HeatmapLayer({
+  //heatmap = new google.maps.visualization.HeatmapLayer({
+	heatmap = new google.maps.visualization.HeatmapLayer({
     data: pointArray,
     dissipating: true 
   });
@@ -274,6 +274,7 @@ function loadData(data, csv, filters) {
 	var felt = [];
   var dates = [];
 	var depths = [];
+	var markerData = [];
 
 	const mapBounds = map.getBounds()
 	
@@ -285,6 +286,10 @@ function loadData(data, csv, filters) {
 		// magnitude
 		if (isInBounds(mapBounds, current)) {
 			magnitude.push(current['properties']['mag']);
+
+			if (map.getZoom() >= zoomLvl) {
+				markerData.push(current);
+			}
 		}
 		
 		// felt
@@ -306,14 +311,14 @@ function loadData(data, csv, filters) {
 		
 		// depth
 		depths.push(current['geometry']['coordinates'][2]);
-  }
+	}
 
-  globalCsv = coordinates;
+	globalCsv = coordinates;
   loadHeatmap(coordinates);
 	loadHistogram(magnitude);
-	console.log(dates);
+	//console.log(dates);
 	loadLineChart(dates, magnitude, felt);
-	loadMarker(d, n);
+	loadMarker(markerData, n, map.getZoom());
 }
 
 /* Applies filters when sliders are interacted with. Used by both sliders.
