@@ -49,21 +49,24 @@
     </div>
 
     <div class='row'>
-        <div id="magnitude-filter" class='five columns'>
-            <div>
-							<!-- <b>Recorded Magnitude vs Felt Magnitude</b> -->
-							<b>Recorded Magnitude by Date</b>
-							<input type='checkbox' id='actual-felt-on' onchange="getLineChartData()" />
-					  </div>
-
-            <p>
-              <label for="magnitude-amount">Magnitude range:</label>
-              <input type="text" id="magnitude-amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
-              <input type='checkbox' id='magnitude-filter-is-on' onchange="reapplyFilters()" checked>
-            </p>
-            
-            <div id="magnitude-slider-range"></div>
+      <div id="magnitude-filter" class='nine columns'>
+        <pre>While zoomed in the colors of earthquakes indicate the following:
+            Green: 0-4 Magnitude  Yellow: 4-6 Magnitude   Red: 6-10 Magnitude
+        </pre>
+        <div align="right">
+          <!-- <b>Recorded Magnitude vs Felt Magnitude</b> -->
+          <input type='checkbox' id='actual-felt-on' onchange="getLineChartData()" />
+          <b>Show Highest Recorded Magnitude by Date (off = Magnitude frequency)</b>
         </div>
+
+        <p>
+          <label for="magnitude-amount">Magnitude range:</label>
+          <input type="text" id="magnitude-amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+          <input type='checkbox' id='magnitude-filter-is-on' onchange="reapplyFilters()" checked>
+        </p>
+
+        <div id="magnitude-slider-range" class='five columns'></div>
+      </div>
     </div>
 
     <!-- Scripts -->

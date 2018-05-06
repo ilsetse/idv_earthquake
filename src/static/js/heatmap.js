@@ -3,7 +3,7 @@ var heatmap = [];
 var globalCsvByBounds = [];
 var globalCsv = [];
 var globalFilters = new Map();
-const zoomLvl = 8;
+const zoomLvl = 4;
 
 function initMap(){
   map = new google.maps.Map($('#map')[0],{

@@ -66,7 +66,7 @@ function loadLineChart(date, mag, felt){
 	.attr("y", 30)
 	.attr("text-anchor", "middle")
 	.style("font-size", "16px")
-	.text("Magnitude by Date");
+	.text("Highest Magnitude by Date");
 	////////////////////////////////////////
 	///////////////// LINE /////////////////
 	////////////////////////////////////////
