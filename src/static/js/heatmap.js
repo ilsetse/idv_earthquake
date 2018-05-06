@@ -1,5 +1,14 @@
+<<<<<<< Updated upstream
 var map, heatmap, allowedBounds;
 var csv = [];
+=======
+var map, allowedBounds, globalData;
+var heatmap = [];
+var globalCsvByBounds = [];
+var globalCsv = [];
+var globalFilters = new Map();
+const zoomLvl = 4;
+>>>>>>> Stashed changes
 
 function initMap(){
 

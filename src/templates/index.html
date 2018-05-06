@@ -1,58 +1,107 @@
 <!DOCTYPE html>
 
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
-    
-    <title>Earthquake Visualization</title>
 
-    <link rel='stylesheet' type='text/css' href='{{url_for('static',filename='css/normalize.css')}}'>
-    <link rel='stylesheet' type='text/css' href='{{url_for('static',filename='css/skeleton.css')}}'>
-    <link rel='stylesheet' type='text/css' href='{{url_for('static',filename='css/style.css')}}'>
+<head>
+  <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+
+  <title>Earthquake Visualization</title>
+
+  <link rel='stylesheet' type='text/css' href='{{url_for('static',filename='css/normalize.css')}}'>
+  <link rel='stylesheet' type='text/css' href='{{url_for('static',filename='css/skeleton.css')}}'>
+  <link rel='stylesheet' type='text/css' href='{{url_for('static',filename='css/style.css')}}'>
 
     <link rel='icon' type='image/png' href='{{url_for('static', filename='images/favicon.png')}}'>
 
-  </head>
+</head>
 
-  <body>
-    <div class='container' style='margin:5% auto;'>
-      <h1 style='text-align:center;'>Heatmap</h1>
-    </div> <!-- endof container -->
+<body>
+  <div class='container' style='margin:5% auto;'>
+    <h1 style='text-align:center;'>Heatmap</h1>
+  </div> <!-- endof container -->
 
+<<<<<<< Updated upstream
       <div class='row'>
         <div class='six columns'>
           <div id='map'></div>
           <div id='options_panel'>
             <button onClick='resetMaps()'>RESET</button>
+=======
+  <div class='row'>
+    <div class='six columns'>
+      <div id='map'></div>
+      <div id='options_panel'>
+        <button onClick='resetMaps()'>RESET</button>
+      </div>
+    </div>
+
+    <div class='row'>
+      <div class='six columns'>
+        <div id='interaction'>
+          <div>
+            <div id='visual'></div>
+>>>>>>> Stashed changes
           </div>
         </div>
      
       <div class='row'>
         <div class='six columns'>
 
+<<<<<<< Updated upstream
           <div id='interaction'>
             <input type='range' min='2000' max='2018' value='2010' class='slider' id='yearRange'>
+=======
+          <!--
+          <div>
+            <p>
+              <label for="year-amount">Year range:</label>
+              <input type="text" id="year-amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+            </p>
+>>>>>>> Stashed changes
           </div>
 
 
         </div>
       </div>
+<<<<<<< Updated upstream
 
 
       </div>
+=======
+    </div>
+
+    <div class='row'>
+      <div id="magnitude-filter" class='nine columns'>
+        <pre>While zoomed in the colors of earthquakes indicate the following:
+            Green: 0-4 Magnitude  Yellow: 4-6 Magnitude   Red: 6-10 Magnitude
+        </pre>
+        <div align="right">
+          <!-- <b>Recorded Magnitude vs Felt Magnitude</b> -->
+          <input type='checkbox' id='actual-felt-on' onchange="getLineChartData()" />
+          <b>Show Highest Recorded Magnitude by Date (off = Magnitude frequency)</b>
+        </div>
+
+        <p>
+          <label for="magnitude-amount">Magnitude range:</label>
+          <input type="text" id="magnitude-amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+          <input type='checkbox' id='magnitude-filter-is-on' onchange="reapplyFilters()" checked>
+        </p>
+
+        <div id="magnitude-slider-range" class='five columns'></div>
+      </div>
+    </div>
+>>>>>>> Stashed changes
 
     <!-- Scripts -->
-    <script
-    src="http://code.jquery.com/jquery-3.3.1.js"
-    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-    crossorigin="anonymous">
+    <script src="http://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous">
     </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.13.0/d3.min.js"></script>
 
     <script src="https://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+<<<<<<< Updated upstream
     
 
     <script async defer
@@ -62,5 +111,22 @@
     <script type="text/javascript" src='{{url_for('static', filename='js/heatmap.js')}}'></script>
 
   </body>
+=======
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKGtYtK-TqXmLFYJzj-rJoNOGWcmx39JE&libraries=visualization&callback=initMap">
+    </script>
+
+    <script type="text/javascript" src='{{url_for('static', filename='js/markers.js')}}'></script>
+    <script type="text/javascript" src='{{url_for('static', filename='js/linechart.js')}}'></script>
+    <script type="text/javascript" src='{{url_for('static', filename='js/radarChart.js')}}'></script>
+    <script type="text/javascript" src='{{url_for('static', filename='js/heatmap.js')}}'></script>
+    <script type="text/javascript" src='{{url_for('static', filename='js/histogram.js')}}'></script>
+    <script type="text/javascript" src='{{url_for('static', filename='js/filters.js')}}'></script>
+    <script>
+      getSlider('year', 2000, 2018);
+      getSlider('magnitude', 0, 10);
+    </script>
+</body>
+>>>>>>> Stashed changes
 
 </html>
