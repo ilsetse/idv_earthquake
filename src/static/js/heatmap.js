@@ -236,7 +236,7 @@ function getCoordinates(){
   // use uncompressed JQuery, not slim minified!
   $.ajax({
     //url: 'static/data/aug_01_earthquake_data.json',
-    url: 'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&updatedafter=2018-04-01',
+    url: 'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2018-06-01&endtime=2018-06-25',
     success: function(data) {
       globalData = data;
       loadData(globalData, globalCsv, globalFilters);
